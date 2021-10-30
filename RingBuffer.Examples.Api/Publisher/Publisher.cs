@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Client;
+using RingBuffer.Examples.Api.Dto;
 
 namespace RingBuffer.Examples.Api.Publisher
 {
@@ -8,13 +9,13 @@ namespace RingBuffer.Examples.Api.Publisher
         public Publisher()
             => (Model) = (CreateModel());
 
-        public ValueTask<bool> PublishWithRingBuffer(Guid id)
+        public ValueTask<ResponseDto> PublishWithRingBuffer(Guid id)
             => PublishBase(id, true);
 
-        public ValueTask<bool> PublishWithoutRingBuffer(Guid id)
+        public ValueTask<ResponseDto> PublishWithoutRingBuffer(Guid id)
             => PublishBase(id, false);
 
-        ValueTask<bool> PublishBase(Guid id, bool useRingBuffer)
+        ValueTask<ResponseDto> PublishBase(Guid id, bool useRingBuffer)
         {
             var withOrWithout = useRingBuffer
                     ? "with"
@@ -38,12 +39,12 @@ namespace RingBuffer.Examples.Api.Publisher
 
                 Console.WriteLine($"[{DateTime.UtcNow}] Published [{withOrWithout} ring buffer] {id}");
 
-                return ValueTask.FromResult(true);
+                return ValueTask.FromResult(new ResponseDto(id, true));
             }
             catch (Exception e)
             {
                 Console.WriteLine($"[{DateTime.UtcNow}] Exception on publishing in [{withOrWithout} queue] message {id} | when exception {e.Message}");
-                return ValueTask.FromResult(false);
+                return ValueTask.FromResult(new ResponseDto(id, false));
             }
         }
 
