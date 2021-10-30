@@ -1,0 +1,44 @@
+version: '3.4'
+
+
+services:
+  examples-api:
+    image: examples-api
+    container_name: examples-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "8090:443"
+    build:
+      context: .
+      dockerfile: ../Dockerfile.Examples.Api
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks: 
+      - ring-buffer-network
+
+  master:
+    image: locustio/locust
+    container_name: main-locust-ring-buffer
+    ports:
+     - "8089:8089"
+    volumes:
+      - ./:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H https://localhost:8090/
+    networks: 
+      - ring-buffer-network
+  
+  worker:
+    image: locustio/locust
+    volumes:
+      - ./:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host master
+    networks: 
+      - ring-buffer-network
+
+networks: 
+  ring-buffer-network:
+    driver: bridge
