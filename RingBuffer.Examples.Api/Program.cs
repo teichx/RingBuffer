@@ -6,8 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IRingBufferBase<Publisher>>(x => new RingBufferPublisher());
+var ringBuffer = new RingBufferPublisher();
+builder.Services.AddSingleton<IRingBufferBase<Publisher>>(ringBuffer);
 builder.Services.AddScoped<Publisher>();
+
+Publisher.CreateQueue();
 
 var app = builder.Build();
 
@@ -20,18 +23,15 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-app.MapGet("/ao/ba", async (IRingBufferBase<Publisher> ringBufferBase) =>
+app.MapGet("/with/ring-buffer", async (IRingBufferBase<Publisher> ringBufferBase) =>
 {
     using var item = ringBufferBase.GetItem();
 
-    return await ExecuteOperation(item.Item);
+    return await item.Item.PublishWithRingBuffer(Guid.NewGuid());
 });
 
-app.MapGet("/foo/bar", async (Publisher publisher) 
-    => await ExecuteOperation(publisher));
-
-async ValueTask<bool> ExecuteOperation(Publisher publisher)
-    => await publisher.Publish(Guid.NewGuid());
+app.MapGet("/without/ring-buffer", async (Publisher publisher) 
+    => await publisher.PublishWithoutRingBuffer(Guid.NewGuid()));
 
 
 app.Run();

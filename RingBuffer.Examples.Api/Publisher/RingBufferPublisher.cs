@@ -10,9 +10,8 @@ namespace RingBuffer.Examples.Api.Publisher
         protected override Publisher CreateFactory()
             => new();
 
-        // To simulate dispose always after use
-        // it depends on your context
+        // verify if your need recreate a connection
         protected override bool Validate(Publisher item)
-            => false;
+            => item.Model is not null && item.Model.IsOpen;
     }
 }

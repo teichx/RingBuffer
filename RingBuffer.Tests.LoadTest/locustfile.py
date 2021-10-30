@@ -8,8 +8,8 @@ class TestExamplesApi(HttpUser):
 
     @task
     def test_with_ring_buffer(self):
-        self.client.get(url="ao/ba", verify=False)
+        self.client.get(url="with/ring-buffer", verify=False)
 
     @task
     def test_without_ring_buffer(self):
-        self.client.get(url="foo/bar", verify=False)
+        self.client.get(url="without/ring-buffer", verify=False)

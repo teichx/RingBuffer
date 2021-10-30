@@ -2,6 +2,18 @@ version: '3.4'
 
 
 services:
+  ring-buffer-rabbitmq:
+    container_name: ring-buffer-rabbitmq
+    ports:
+        - 5672:5672
+        - 15672:15672
+    environment:
+        - RABBITMQ_DEFAULT_USER=guest
+        - RABBITMQ_DEFAULT_PASS=guest        
+    image: rabbitmq:3-management
+    networks:
+      - ring-buffer-network
+
   examples-api:
     image: examples-api
     container_name: examples-api
@@ -13,12 +25,15 @@ services:
       - "8090:443"
     build:
       context: .
-      dockerfile: ../Dockerfile.Examples.Api
+      dockerfile: ./Dockerfile.Examples.Api
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     networks: 
       - ring-buffer-network
+    restart: always
+    depends_on:
+      - ring-buffer-rabbitmq
 
   master:
     image: locustio/locust
@@ -26,15 +41,15 @@ services:
     ports:
      - "8089:8089"
     volumes:
-      - ./:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --master -H https://localhost:8090/
+      - ./RingBuffer.Tests.LoadTest/:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H https://examples-api/
     networks: 
       - ring-buffer-network
   
   worker:
     image: locustio/locust
     volumes:
-      - ./:/mnt/locust
+      - ./RingBuffer.Tests.LoadTest/:/mnt/locust
     command: -f /mnt/locust/locustfile.py --worker --master-host master
     networks: 
       - ring-buffer-network

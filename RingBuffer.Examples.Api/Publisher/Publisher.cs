@@ -1,18 +1,80 @@
-﻿namespace RingBuffer.Examples.Api.Publisher
+﻿using RabbitMQ.Client;
+
+namespace RingBuffer.Examples.Api.Publisher
 {
     public class Publisher : IDisposable
     {
+        public readonly IModel Model;
         public Publisher()
+            => (Model) = (CreateModel());
+
+        public ValueTask<bool> PublishWithRingBuffer(Guid id)
+            => PublishBase(id, true);
+
+        public ValueTask<bool> PublishWithoutRingBuffer(Guid id)
+            => PublishBase(id, false);
+
+        ValueTask<bool> PublishBase(Guid id, bool useRingBuffer)
         {
-            // simulate time to connection
-            Thread.Sleep(15);
+            var withOrWithout = useRingBuffer
+                    ? "with"
+                    : "without";
+
+            try
+            {
+                var routingKey = useRingBuffer
+                    ? QueueWithRingBuffer
+                    : QueueWithoutRingBuffer;
+
+                var body = id.ToByteArray();
+
+                Model.BasicPublish(
+                    exchange: Topic,
+                    routingKey: routingKey,
+                    mandatory: true,
+                    basicProperties: null,
+                    body: body
+                );
+
+                Console.WriteLine($"[{DateTime.UtcNow}] Published [{withOrWithout} ring buffer] {id}");
+
+                return ValueTask.FromResult(true);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[{DateTime.UtcNow}] Exception on publishing in [{withOrWithout} queue] message {id} | when exception {e.Message}");
+                return ValueTask.FromResult(false);
+            }
         }
 
-        public ValueTask<bool> Publish(Guid _)
+        public const string QueueWithRingBuffer = "queue.with.ring.buffer";
+        public const string QueueWithoutRingBuffer = "queue.without.ring.buffer";
+        public const string Topic = "amq.direct";
+
+        public static void CreateQueue()
         {
-            // simulate time to publish
-            Thread.Sleep(25);
-            return ValueTask.FromResult(true);
+            var model = CreateModel();
+
+            QueueDeclare(model, QueueWithRingBuffer);
+            QueueDeclare(model, QueueWithoutRingBuffer);
+        }
+
+        static void QueueDeclare(IModel model, string queueName)
+        {
+            model.QueueDeclare(queueName, false, true, true, null);
+            model.QueueBind(queueName, Topic, queueName, null);
+        }
+
+        public static IModel CreateModel()
+        {
+            IConnectionFactory conectionFactory = new ConnectionFactory
+            {
+                HostName = "ring-buffer-rabbitmq"
+            };
+            var connection = conectionFactory.CreateConnection();
+            var model = connection.CreateModel();
+
+            return model;
         }
 
         public void Dispose()
