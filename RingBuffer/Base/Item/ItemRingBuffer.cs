@@ -32,11 +32,13 @@ namespace RingBuffer.Base.Item
                 Buffer.Enqueue(Item);
             else
             {
-                var temporaryItem = Item;
-                temporaryItem.Dispose();
-                
                 var thisInstance = this;
-                Task.Run(() => thisInstance.Buffer.Enqueue(thisInstance.CreateFunction()));
+                
+                Task.Run(() =>
+                {
+                    thisInstance.Buffer.Enqueue(thisInstance.CreateFunction());
+                    thisInstance.Item.Dispose();
+                });
             }
 
 
