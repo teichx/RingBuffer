@@ -80,7 +80,9 @@ namespace RingBuffer.Examples.Api.Publisher
 
         public void Dispose()
         {
-            // dispose connection
+            Model.Dispose();
+
+            GC.SuppressFinalize(this);
         }
     }
 }
