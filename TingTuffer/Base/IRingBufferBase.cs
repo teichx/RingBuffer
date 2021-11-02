@@ -1,6 +1,6 @@
-﻿using RingBuffer.Base.Item;
+﻿using TingTuffer.Base.Item;
 
-namespace RingBuffer.Base
+namespace TingTuffer.Base
 {
     public interface IRingBufferBase<T> : IDisposable where T : IDisposable
     {

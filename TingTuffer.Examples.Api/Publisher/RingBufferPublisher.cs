@@ -1,11 +1,11 @@
-﻿using RingBuffer.Base;
+﻿using TingTuffer.Base;
 
-namespace RingBuffer.Examples.Api.Publisher
+namespace TingTuffer.Examples.Api.Publisher
 {
-    public class RingBufferPublisher : RingBufferBase<Publisher>
+    public class TingTufferPublisher : RingBufferBase<Publisher>
     {
-        public RingBufferPublisher() { }
-        public RingBufferPublisher(int size) : base(size) { }
+        public TingTufferPublisher() { }
+        public TingTufferPublisher(int size) : base(size) { }
 
         protected override Publisher CreateFactory()
             => new();

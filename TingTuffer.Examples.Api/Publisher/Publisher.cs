@@ -1,7 +1,7 @@
 ﻿using RabbitMQ.Client;
-using RingBuffer.Examples.Api.Dto;
+using TingTuffer.Examples.Api.Dto;
 
-namespace RingBuffer.Examples.Api.Publisher
+namespace TingTuffer.Examples.Api.Publisher
 {
     public class Publisher : IDisposable
     {
@@ -9,23 +9,23 @@ namespace RingBuffer.Examples.Api.Publisher
         public Publisher()
             => (Model) = (CreateModel());
 
-        public ValueTask<ResponseDto> PublishWithRingBuffer(Guid id)
+        public ValueTask<ResponseDto> PublishWithTingTuffer(Guid id)
             => PublishBase(id, true);
 
-        public ValueTask<ResponseDto> PublishWithoutRingBuffer(Guid id)
+        public ValueTask<ResponseDto> PublishWithoutTingTuffer(Guid id)
             => PublishBase(id, false);
 
-        ValueTask<ResponseDto> PublishBase(Guid id, bool useRingBuffer)
+        ValueTask<ResponseDto> PublishBase(Guid id, bool useTingTuffer)
         {
-            var withOrWithout = useRingBuffer
+            var withOrWithout = useTingTuffer
                     ? "with"
                     : "without";
 
             try
             {
-                var routingKey = useRingBuffer
-                    ? QueueWithRingBuffer
-                    : QueueWithoutRingBuffer;
+                var routingKey = useTingTuffer
+                    ? QueueWithTingTuffer
+                    : QueueWithoutTingTuffer;
 
                 var body = id.ToByteArray();
 
@@ -48,16 +48,16 @@ namespace RingBuffer.Examples.Api.Publisher
             }
         }
 
-        public const string QueueWithRingBuffer = "queue.with.ring.buffer";
-        public const string QueueWithoutRingBuffer = "queue.without.ring.buffer";
+        public const string QueueWithTingTuffer = "queue.with.ting.tuffer";
+        public const string QueueWithoutTingTuffer = "queue.without.ting.tuffer";
         public const string Topic = "amq.direct";
 
         public static void CreateQueue()
         {
             var model = CreateModel();
 
-            QueueDeclare(model, QueueWithRingBuffer);
-            QueueDeclare(model, QueueWithoutRingBuffer);
+            QueueDeclare(model, QueueWithTingTuffer);
+            QueueDeclare(model, QueueWithoutTingTuffer);
         }
 
         static void QueueDeclare(IModel model, string queueName)
@@ -70,7 +70,7 @@ namespace RingBuffer.Examples.Api.Publisher
         {
             IConnectionFactory conectionFactory = new ConnectionFactory
             {
-                HostName = "ring-buffer-rabbitmq"
+                HostName = "rabbitmq-ting-tuffer"
             };
             var connection = conectionFactory.CreateConnection();
             var model = connection.CreateModel();

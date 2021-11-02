@@ -1,4 +1,4 @@
-﻿namespace RingBuffer.Examples.Api.Dto
+﻿namespace TingTuffer.Examples.Api.Dto
 {
     public struct ResponseDto
     {

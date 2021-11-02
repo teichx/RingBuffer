@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RingBuffer", "RingBuffer\RingBuffer.csproj", "{63BFF389-D38D-4104-B5E3-2509C32E389C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TingTuffer", "TingTuffer\TingTuffer.csproj", "{63BFF389-D38D-4104-B5E3-2509C32E389C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{686E92BA-0FB9-4E4E-9CF3-BC3AF92C1CA9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RingBuffer.Examples.Api", "RingBuffer.Examples.Api\RingBuffer.Examples.Api.csproj", "{1AD22D66-5DD0-4C06-8B2E-58BC91C4E52B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TingTuffer.Examples.Api", "TingTuffer.Examples.Api\TingTuffer.Examples.Api.csproj", "{1AD22D66-5DD0-4C06-8B2E-58BC91C4E52B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{68CBD767-5616-4317-923D-137766D2DF47}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "RingBuffer.Tests.LoadTest", "RingBuffer.Tests.LoadTest\RingBuffer.Tests.LoadTest.pyproj", "{22FC483A-B050-4DD1-B4C5-5E0B187F155A}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TingTuffer.Tests.LoadTest", "TingTuffer.Tests.LoadTest\TingTuffer.Tests.LoadTest.pyproj", "{22FC483A-B050-4DD1-B4C5-5E0B187F155A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

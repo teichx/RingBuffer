@@ -1,7 +1,7 @@
-﻿using RingBuffer.Base.Item;
+﻿using TingTuffer.Base.Item;
 using System.Collections.Concurrent;
 
-namespace RingBuffer.Base
+namespace TingTuffer.Base
 {
     public abstract class RingBufferBase<T> : IRingBufferBase<T> where T : IDisposable
     {

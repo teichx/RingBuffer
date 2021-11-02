@@ -29,5 +29,5 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Publish Nuget Package
-      working-directory: ./RingBuffer/bin/Release/
-      run:  dotnet nuget push ./RingBuffer.*.nupkg -k ${{ secrets.TOKEN_NUGET }} -s https://nuget.pkg.github.com/teichx/index.json --skip-duplicate
+      working-directory: ./TingTuffer/bin/Release/
+      run: dotnet nuget push ./TingTuffer.*.nupkg -k ${{ secrets.TOKEN_NUGET }} -s https://nuget.pkg.github.com/teichx/index.json --skip-duplicate

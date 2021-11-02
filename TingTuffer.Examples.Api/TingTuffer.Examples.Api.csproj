@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>313e61f8-4a5c-4d72-9f4c-e9ee3119530f</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\RingBuffer</DockerfileContext>
+    <DockerfileContext>..\TingTuffer</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RingBuffer\RingBuffer.csproj" />
+    <ProjectReference Include="..\TingTuffer\TingTuffer.csproj" />
   </ItemGroup>
 
 </Project>

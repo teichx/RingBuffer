@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "RingBuffer.Examples.Api": {
+    "TingTuffer.Examples.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

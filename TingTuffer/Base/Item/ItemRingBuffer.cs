@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace RingBuffer.Base.Item
+namespace TingTuffer.Base.Item
 {
     public struct ItemRingBuffer<T> : IItemRingBuffer<T> where T : IDisposable
     {

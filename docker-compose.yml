@@ -2,8 +2,8 @@ version: '3.4'
 
 
 services:
-  ring-buffer-rabbitmq:
-    container_name: ring-buffer-rabbitmq
+  rabbitmq-ting-tuffer:
+    container_name: ting-tuffer-rabbitmq
     ports:
         - 5672:5672
         - 15672:15672
@@ -12,14 +12,14 @@ services:
         - RABBITMQ_DEFAULT_PASS=guest        
     image: rabbitmq:3-management
     networks:
-      - ring-buffer-network
+      - ting-tuffer-network
 
-  examples-api:
-    image: examples-api
-    container_name: examples-api
+  examples-api-ting-tuffer:
+    image: examples-api-ting-tuffer
+    container_name: examples-api-ting-tuffer
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+;http://+
     ports:
       - "80"
       - "8090:443"
@@ -30,30 +30,30 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     networks: 
-      - ring-buffer-network
+      - ting-tuffer-network
     restart: always
     depends_on:
-      - ring-buffer-rabbitmq
+      - rabbitmq-ting-tuffer
 
-  master:
+  locust-master:
     image: locustio/locust
-    container_name: main-locust-ring-buffer
+    container_name: locust-master
     ports:
      - "8089:8089"
     volumes:
-      - ./RingBuffer.Tests.LoadTest/:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --master -H https://examples-api/
+      - ./TingTuffer.Tests.LoadTest/:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H https://examples-api-ting-tuffer/
     networks: 
-      - ring-buffer-network
+      - ting-tuffer-network
   
-  worker:
+  locust-worker:
     image: locustio/locust
     volumes:
-      - ./RingBuffer.Tests.LoadTest/:/mnt/locust
-    command: -f /mnt/locust/locustfile.py --worker --master-host master
+      - ./TingTuffer.Tests.LoadTest/:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host locust-master
     networks: 
-      - ring-buffer-network
+      - ting-tuffer-network
 
 networks: 
-  ring-buffer-network:
+  ting-tuffer-network:
     driver: bridge

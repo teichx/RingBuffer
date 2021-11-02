@@ -9,8 +9,8 @@
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>RingBuffer.Tests.LoadTest</Name>
-    <RootNamespace>RingBuffer.Tests.LoadTest</RootNamespace>
+    <Name>TingTuffer.Tests.LoadTest</Name>
+    <RootNamespace>TingTuffer.Tests.LoadTest</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>

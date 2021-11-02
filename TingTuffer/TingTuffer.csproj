@@ -5,10 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://github.com/teichx/RingBuffer</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/teichx/RingBuffer</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/teichx/TingTuffer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/teichx/TingTuffer</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	  <Authors>Temístocles Schwartz</Authors>
+	  <Description>a ring buffer for .net</Description>
   </PropertyGroup>
 
   <ItemGroup>
