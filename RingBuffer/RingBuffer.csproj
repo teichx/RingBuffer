@@ -8,6 +8,7 @@
     <PackageProjectUrl>https://github.com/teichx/RingBuffer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/teichx/RingBuffer</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <Authors>Temístocles Schwartz</Authors>
   </PropertyGroup>
 
   <ItemGroup>
