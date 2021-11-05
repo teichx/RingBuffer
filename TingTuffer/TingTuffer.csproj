@@ -10,7 +10,6 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	  <Authors>Temístocles Schwartz</Authors>
 	  <Description>a ring buffer for .net</Description>
-	  <VersionPrefix>1.0.0</VersionPrefix>
     <PackageIconUrl>https://github.com/teichx/TingTuffer/blob/master/Assets/icon-ting-tuffer.png?raw=true</PackageIconUrl>
     <NoWarn>NU5048</NoWarn>
   </PropertyGroup>

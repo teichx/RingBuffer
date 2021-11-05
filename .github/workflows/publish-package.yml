@@ -28,6 +28,19 @@ jobs:
     - name: Test
       run: dotnet test --verbosity normal
 
+    - name: Get version
+      id: version
+      uses: battila7/get-version-action@v2
+
+    - name: Echo version
+      run: echo ${{ steps.version.outputs.version }}
+
+    - name: Echo version without V
+      run: echo ${{ steps.version.outputs.version-without-v }}
+
+    - name: Create package
+      run: dotnet pack TingTuffer --no-restore --no-build --configuration Release -p:PackageVersion=${{ steps.version.outputs.version-without-v }}
+
     - name: Publish Nuget Package
       working-directory: ./TingTuffer/bin/Release/
       run: dotnet nuget push ./TingTuffer.*.nupkg -k ${{ secrets.TOKEN_NUGET }} -s https://nuget.pkg.github.com/teichx/index.json --skip-duplicate
