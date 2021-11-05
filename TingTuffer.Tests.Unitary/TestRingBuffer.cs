@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using TingTuffer.Base;
 using Xunit;
 
@@ -110,6 +111,73 @@ namespace TingTuffer.Tests.Unitary
 
             mock.Object.Dispose();
             Assert.Equal(ringSize, mockItem.Invocations.Count);
+        }
+
+        [Fact]
+        public void TestGetItemWithUsing()
+        {
+            var mock = new Mock<RingBufferBase<IDisposable>>(6);
+            var mockItem = new Mock<IDisposable>();
+
+            mockItem.Setup(x => x.Dispose())
+                .Verifiable();
+
+            mock.Protected()
+                .Setup<bool>("Validate", mockItem.Object)
+                .Returns(false);
+
+            var countCreated = 0;
+            mock.Protected()
+                .Setup<IDisposable>("CreateFactory")
+                .Returns(() =>
+                {
+                    countCreated += 1;
+                    return mockItem.Object;
+                });
+
+            var ringBuffer = mock.Object;
+            Task.Run(() =>
+            {
+                using var element = ringBuffer.GetItem();
+            }).Wait();
+
+            while (mockItem.Invocations.Count == 0);
+
+            Assert.Equal(1, mockItem.Invocations.Count);
+        }
+
+        [Fact]
+        public void TestGetItemCallingDispose()
+        {
+            var mock = new Mock<RingBufferBase<IDisposable>>(6);
+            var mockItem = new Mock<IDisposable>();
+
+            mockItem.Setup(x => x.Dispose())
+                .Verifiable();
+
+            mock.Protected()
+                .Setup<bool>("Validate", mockItem.Object)
+                .Returns(false);
+
+            var countCreated = 0;
+            mock.Protected()
+                .Setup<IDisposable>("CreateFactory")
+                .Returns(() =>
+                {
+                    countCreated += 1;
+                    return mockItem.Object;
+                });
+
+            var ringBuffer = mock.Object;
+            Task.Run(() =>
+            {
+                var element = ringBuffer.GetItem();
+                element.Dispose();
+            }).Wait();
+
+            while (mockItem.Invocations.Count == 0) ;
+
+            Assert.Equal(1, mockItem.Invocations.Count);
         }
     }
 }
