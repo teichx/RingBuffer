@@ -17,6 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TingTuffer.Tests.Unitary", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TingTuffer.Examples.DefaultApi", "TingTuffer.Examples.DefaultApi\TingTuffer.Examples.DefaultApi.csproj", "{2A25E8B9-865F-44B7-B22D-FE783B7680A3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{48297F2C-558E-4408-A88C-ECF9D999A33A}"
+	ProjectSection(SolutionItems) = preProject
+		README-pt-BR.md = README-pt-BR.md
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
