@@ -1,4 +1,4 @@
-# TingTuffer - a ring buffer for .net
+# <img src="./Assets/logo-ting-tuffer.png" height="42" title="Ting Tuffer">  - a ring buffer for .net
 
 - [para a versão em portugues, clique aqui](./README-pt-BR.md)
 

@@ -1,4 +1,4 @@
-# TingTuffer - um buffer circular para .net
+# <img src="./Assets/logo-ting-tuffer.png" height="42" title="Ting Tuffer">  - um buffer circular para .net
 
 - [to english version click here](./README.md)
 
