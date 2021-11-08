@@ -12,6 +12,7 @@
 	  <Description>a ring buffer for .net</Description>
     <PackageIconUrl>https://github.com/teichx/TingTuffer/blob/master/Assets/icon-ting-tuffer.png?raw=true</PackageIconUrl>
     <NoWarn>NU5048</NoWarn>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
