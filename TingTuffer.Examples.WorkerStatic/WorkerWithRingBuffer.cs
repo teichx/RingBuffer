@@ -18,7 +18,7 @@ namespace TingTuffer.Examples.WorkerStatic
                 {
                     using var item = RingBufferIoC.RabbitMQ.GetItem();
 
-                    _logger.LogInformation(ServicePublisher.Publish(item.Item, true));
+                    _logger.LogInformation(ServicePublisher.Publish(item.Item, EnumQueue.WithRingBuffer));
                 }
             }, stoppingToken);
 

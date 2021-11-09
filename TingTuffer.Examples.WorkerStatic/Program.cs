@@ -12,6 +12,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddHostedService<WorkerWithoutRingBuffer>();
+        //services.AddHostedService<WorkerConnectionAlwayOn>();
         services.AddHostedService<WorkerWithRingBuffer>();
     })
     .Build();

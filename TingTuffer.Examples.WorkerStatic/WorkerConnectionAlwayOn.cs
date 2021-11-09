@@ -3,24 +3,24 @@ using TingTuffer.Examples.WorkerStatic.Service;
 
 namespace TingTuffer.Examples.WorkerStatic
 {
-    public class WorkerWithoutRingBuffer : BackgroundService
+    public class WorkerConnectionAlwayOn : BackgroundService
     {
-        private readonly ILogger<WorkerWithoutRingBuffer> _logger;
+        private readonly ILogger<WorkerConnectionAlwayOn> _logger;
 
-        public WorkerWithoutRingBuffer(ILogger<WorkerWithoutRingBuffer> logger)
+        public WorkerConnectionAlwayOn(ILogger<WorkerConnectionAlwayOn> logger)
             => _logger = logger;
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            using var model = new ConnectionFactory()
+                .CreateConnection()
+                .CreateModel();
+
             var task = Task.Run(() =>
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    using var model = new ConnectionFactory()
-                      .CreateConnection()
-                      .CreateModel();
-
-                    _logger.LogInformation(ServicePublisher.Publish(model, EnumQueue.WithoutRingBuffer));
+                    _logger.LogInformation(ServicePublisher.Publish(model, EnumQueue.ConnectionAlwaysOn));
                 }
             }, stoppingToken);
 
